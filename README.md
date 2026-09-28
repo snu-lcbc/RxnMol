@@ -164,7 +164,11 @@ python src/rxnmol/objectives/registry.py
 
 The reaction prediction model weights are required for fragment-based optimization. Download from:
 
-- [Model weights (link)] - *Coming soon*
+- [Deployment, proxy, and docking weights](https://doi.org/10.5281/zenodo.20444600)
+- [Reported reaction-model checkpoint, pretraining checkpoint, and datasets](https://github.com/snu-lcbc/RxnMol/releases/tag/r2-reproducibility-2026-09-29)
+
+The evaluated checkpoint and the final deployment weights are identified separately
+in [reaction_model/README.md](reaction_model/README.md).
 
 
 ## License
