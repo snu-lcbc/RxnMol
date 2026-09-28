@@ -103,3 +103,11 @@ rxn_smiles_mit/
 *.sh
 !run.py
 output*
+
+# Reproducibility release source (large assets remain excluded).
+!scripts/
+scripts/*
+!scripts/prepare_building_blocks.py
+!reaction_model/scripts/
+!reaction_model/scripts/*.py
+!reproducibility/configurations/run_manifest.csv

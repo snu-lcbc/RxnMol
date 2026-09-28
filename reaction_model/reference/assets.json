@@ -1,0 +1,26 @@
+[
+  {
+    "name": "reaction_datasets.tar.gz",
+    "kind": "datasets",
+    "bytes": 118391770,
+    "sha256": "66245ab8f0ca587a6246d0fbe4900ff9540e6540f67d46f5d00052f0ac437983",
+    "destination": "data/reaction_datasets.tar.gz",
+    "url": "https://github.com/snu-lcbc/RxnMol/releases/download/r2-reproducibility-2026-09-29/reaction_datasets.tar.gz"
+  },
+  {
+    "name": "synthetic_pretrain.ckpt",
+    "kind": "weights",
+    "bytes": 605923952,
+    "sha256": "ec5c355ef467db9453bdcde3126341d2a73b20e33143bcc0acbef9dd6ce6d4a6",
+    "destination": "weights/synthetic_pretrain.ckpt",
+    "url": "https://github.com/snu-lcbc/RxnMol/releases/download/r2-reproducibility-2026-09-29/synthetic_pretrain.ckpt"
+  },
+  {
+    "name": "reported_finetune.ckpt",
+    "kind": "weights",
+    "bytes": 605924656,
+    "sha256": "5274c67b82c73efdf3ff9d492b6a3d6749eb6c059a1c10f7481461160a40338c",
+    "destination": "weights/reported_finetune.ckpt",
+    "url": "https://github.com/snu-lcbc/RxnMol/releases/download/r2-reproducibility-2026-09-29/reported_finetune.ckpt"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "sdf_only": [
+    {
+      "smiles": "C1=C(C=Cc2ccncn2)COc2ccccc21",
+      "canonical": "C(=Cc1ccncn1)C1=Cc2ccccc2OC1",
+      "inchikey": "CZOAYVNXGHDXGK-UHFFFAOYSA-N"
+    },
+    {
+      "smiles": "Cn1nc(C(=O)N=c2sccn2C)ccc1=O",
+      "canonical": "Cn1ccsc1=NC(=O)c1ccc(=O)n(C)n1",
+      "inchikey": "BWXGUTKUWKDHHH-UHFFFAOYSA-N"
+    }
+  ],
+  "released_only": [
+    {
+      "smiles": "C(=Cc1ccncn1)C1=Cc2ccccc2OC1",
+      "canonical": "C(=Cc1ccncn1)C1=Cc2ccccc2OC1",
+      "inchikey": "CZOAYVNXGHDXGK-UHFFFAOYSA-N"
+    },
+    {
+      "smiles": "Cn1ccsc1=NC(=O)c1ccc(=O)n(C)n1",
+      "canonical": "Cn1ccsc1=NC(=O)c1ccc(=O)n(C)n1",
+      "inchikey": "BWXGUTKUWKDHHH-UHFFFAOYSA-N"
+    }
+  ]
+}

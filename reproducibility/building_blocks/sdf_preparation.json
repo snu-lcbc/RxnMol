@@ -1,0 +1,26 @@
+{
+  "rdkit_version": "2023.09.6",
+  "input_sha256": "1040b672f601887dbc059697f318c81cbcc804bb44b859c17a7293eee349c929",
+  "output_sha256": "18d4020584630f0cc166cf1d5aa5c00363d4fbfc26836882405bf5b6f2216d48",
+  "script_sha256": "c964eda9284a04aa184ec700f913c549e81d9a7c8f2f08a8cc2ebbb4b62b14db",
+  "options": {
+    "input": "/home/alatoo/projects/fragments/data/Enamine_Fragment_Collection_259380cmpds_20230413.sdf",
+    "output": "response/notes/R2_20260929/enamine_from_sdf.smi",
+    "format": null,
+    "report": "response/notes/R2_20260929/sdf_preparation.json",
+    "records": "response/notes/R2_20260929/sdf_records.csv",
+    "largest_fragment": false,
+    "neutralize": false,
+    "deduplicate": false,
+    "min_mw": null,
+    "max_mw": null,
+    "max_abs_charge": null,
+    "exclude_smarts": null
+  },
+  "counts": {
+    "input_records": 259380,
+    "input_multicomponent": 15278,
+    "retained": 259380
+  },
+  "unique_output_structures": 259380
+}

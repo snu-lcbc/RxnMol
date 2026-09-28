@@ -4,6 +4,17 @@
 
 RxnMol is a novel molecular optimization framework that operates on **synthesis routes** rather than molecular structures directly. By representing candidates as ordered sequences of commercially available building blocks (fragments), RxnMol ensures that every generated molecule comes with a valid, step-by-step synthesis pathway predicted by a neural reaction model.
 
+## Reproducing the reported experiments
+
+The [reaction-model package](reaction_model/README.md) contains the selected
+Synthetic-RXN to USPTO-MIT replay model's training recipes, saved tokenizer,
+dataset preparation, evaluation code, and versioned dataset/checkpoint links.
+The [reproducibility documentation](reproducibility/README.md) maps saved
+generation configurations to effective settings, distinguishes recorded
+environments from the tested CPU installation, and documents building-block
+preparation. Large training files are supplied through the
+[reproducibility release](https://github.com/snu-lcbc/RxnMol/releases/tag/r2-reproducibility-2026-09-29).
+
 ## Research Overview
 
 ### The Core Idea

@@ -1,0 +1,7 @@
+{
+  "python": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 20:50:58) [GCC 12.3.0]",
+  "torch": "2.6.0+cu124",
+  "torch_cuda_build": "12.4",
+  "rdkit": "2023.09.6",
+  "rdkit_file": "/home/alatoo/anaconda3/envs/torch-cu12.4/lib/python3.12/site-packages/rdkit/__init__.py"
+}

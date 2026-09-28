@@ -1,0 +1,7 @@
+{
+  "python": "3.11.6 | packaged by conda-forge | (main, Oct  3 2023, 10:40:35) [GCC 12.3.0]",
+  "torch": "2.4.0+cu121",
+  "torch_cuda_build": "12.1",
+  "rdkit": "2023.09.6",
+  "rdkit_file": "/home/alatoo/anaconda3/envs/rxnmol/lib/python3.11/site-packages/rdkit/__init__.py"
+}

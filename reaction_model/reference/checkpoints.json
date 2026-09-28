@@ -1,0 +1,18 @@
+{
+  "synthetic_pretrain.ckpt": {
+    "sha256": "ec5c355ef467db9453bdcde3126341d2a73b20e33143bcc0acbef9dd6ce6d4a6",
+    "bytes": 605923952,
+    "original_filename": "epoch=20-step=104320-val_loss=0.8727.ckpt"
+  },
+  "reported_finetune.ckpt": {
+    "sha256": "5274c67b82c73efdf3ff9d492b6a3d6749eb6c059a1c10f7481461160a40338c",
+    "bytes": 605924656,
+    "original_filename": "epoch=14-step=29812-val_loss=0.8856.ckpt"
+  },
+  "deployed_model.pt": {
+    "sha256": "d92755993b29f234d5546a78576730cb3820d3c975e2e28babb32353e1bf5241",
+    "bytes": 201956478,
+    "source": "Zenodo 10.5281/zenodo.20444600, models.zip, reaction/model.pt",
+    "optimizer_step": 30000
+  }
+}

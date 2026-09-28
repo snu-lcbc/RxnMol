@@ -1,0 +1,26 @@
+{
+  "rdkit_version": "2023.09.6",
+  "input_sha256": "06ec733268be8f671e94c792301cfcca49dc300402d0c453286e674f11b23b22",
+  "output_sha256": "06ec733268be8f671e94c792301cfcca49dc300402d0c453286e674f11b23b22",
+  "script_sha256": "c964eda9284a04aa184ec700f913c549e81d9a7c8f2f08a8cc2ebbb4b62b14db",
+  "options": {
+    "input": "response/release_r2/data/enamine_fragments.smi",
+    "output": "response/notes/R2_20260929/clean_env_enamine.smi",
+    "format": null,
+    "report": "response/notes/R2_20260929/clean_env_preparation.json",
+    "records": "response/notes/R2_20260929/clean_env_records.csv",
+    "largest_fragment": false,
+    "neutralize": false,
+    "deduplicate": false,
+    "min_mw": null,
+    "max_mw": null,
+    "max_abs_charge": null,
+    "exclude_smarts": null
+  },
+  "counts": {
+    "input_records": 259380,
+    "retained": 259380,
+    "input_multicomponent": 15278
+  },
+  "unique_output_structures": 259380
+}

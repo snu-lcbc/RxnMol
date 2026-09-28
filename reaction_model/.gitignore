@@ -1,0 +1,10 @@
+data/raw/
+data/synthetic_rxn/
+data/uspto-mit/
+data/mixed/
+weights/
+runs/
+.cache/
+__pycache__/
+*.pyc
+.venv*/

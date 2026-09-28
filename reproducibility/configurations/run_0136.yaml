@@ -1,0 +1,99 @@
+csa:
+  bank_size: 1000
+  seed_size: 600
+  max_iter: 500
+  d_init: 0.6
+  d_min: 0.1
+  gamma: 0.99
+  n_cross_op1: 5
+  n_cross_op2: 5
+  n_mut_op: 5
+  early_stop_patience: 50
+  local_optimization_enabled: false
+  local_optimization_frequency: 1
+  local_optimization_max_steps: 3
+  local_optimization_neighbors: 5
+solution:
+  spec_type: fragment_route
+  max_fragments: 4
+  min_fragments: 2
+  max_mol_size: null
+  num_step: 5
+data:
+  building_blocks_file: /home/alatoo/projects/fragments/rxnmol-experimental/data/enamine_fragments.smi
+  data_dir: data
+  cache_path: cache/reaction_cache.db
+reaction_model:
+  provider: transformer_v2
+  model_dir: /home/alatoo/projects/fragments/reaction_model_trainings/mechanistic_rxn/runs/synthetic_rxn/ft_synth_to_uspto_mix90_10
+  checkpoint_path: /home/alatoo/projects/fragments/reaction_model_trainings/mechanistic_rxn/runs/synthetic_rxn/ft_synth_to_uspto_mix90_10/checkpoints/epoch=14-step=29812-val_loss=0.8856.ckpt
+  tokenizer_path: null
+  repo_path: /home/alatoo/projects/fragments/reaction_model_trainings/mechanistic_rxn
+  tag: ft_synthetic_mix90_10
+  batch_size: null
+  max_len: 256
+  beam_size: 1
+  length_penalty: 1.0
+  task: forward
+  enforce_cuda: true
+  compile: true
+  compile_backend: inductor
+  compile_mode: reduce-overhead
+operators:
+  crossover_enabled: true
+  mutation_enabled: true
+  crossover_prob: 0.5
+  mutation_add_prob: 0.33
+  mutation_delete_prob: 0.33
+  mutation_replace_prob: 0.34
+  crossover_types:
+  - fragment_list
+  mutation_types:
+  - fragment_replace
+  crossover_weights: null
+  mutation_weights:
+    replace: 0.5
+    add: 0.25
+    remove: 0.25
+objective:
+  name: btk_lipinski
+  components: null
+  weights: null
+  aggregation: weighted_sum
+  validity_penalty: 999.0
+  kwargs: {}
+monitoring:
+  save_interval: 1
+  log_level: INFO
+  track_diversity: true
+  track_timing: true
+  track_operators: true
+  plot_progress: true
+  plot_format: png
+  progress_bar: true
+  verbose: false
+persistence:
+  save_banks: true
+  save_traces: true
+  save_cache: true
+  save_config: true
+  save_metrics: true
+  cache_auto_merge: false
+  cache_auto_merge_delete: false
+  cache_max_entries: 5000000
+  compress_banks: true
+  compression_format: gzip
+  checkpoint_enabled: false
+  checkpoint_interval: 50
+runtime:
+  random_seed: null
+  num_workers: 1
+  device: cuda
+  require_cuda: true
+  cache_max_size: 100000
+  reaction_cache_enabled: true
+experiment:
+  method_name: rxnmol
+  repeat_id: null
+runs_dir: runs_mw/ft_synthetic_mix90_10
+output_dir: runs_mw/ft_synthetic_mix90_10/rxnmol/btk_lipinski/spec=fragment_route/mf2-4/r2
