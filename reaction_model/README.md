@@ -19,21 +19,41 @@ strategies are outside this package.
 - `validation/`: preparation, vocabulary-coverage, and software-test results.
 
 The asset manifest identifies the two raw reaction corpora and two full
-checkpoints by filename and SHA-256 hash. Obtain the files from the
-[GitHub release](https://github.com/snu-lcbc/RxnMol/releases) corresponding to
-your code version. Large files are distributed separately from the Git source.
-Run the following commands from this directory, setting `ASSET_DIR` to a
-directory containing `reaction_datasets.tar.gz`, `synthetic_pretrain.ckpt`, and
-`reported_finetune.ckpt`:
+checkpoints by filename and SHA-256 hash. Large files are distributed separately
+from the Git source. From this directory, run:
 
 ```bash
-python scripts/download_assets.py --datasets --weights --asset-dir "$ASSET_DIR"
+python scripts/download_assets.py
+```
+
+With no arguments, the script downloads both the datasets and checkpoints from
+[release v1.1.0](https://github.com/snu-lcbc/RxnMol/releases/tag/v1.1.0), verifies
+their SHA-256 hashes, extracts the reaction records into `data/raw/`, and places
+the checkpoints and tokenizer in `weights/`. Existing files are verified and
+reused. Then reproduce the training splits and replay file:
+
+```bash
 python scripts/prepare_data.py --verify-reported
 ```
 
-Alternatively, `--release-tag TAG` can replace `--asset-dir` to download
-from the explicitly selected GitHub release. The script verifies SHA-256 hashes
-for either source. The preparation script reproduces
+Optional download settings:
+
+```bash
+# Prepare only one group.
+python scripts/download_assets.py --datasets
+python scripts/download_assets.py --weights
+
+# Use files already downloaded to a local directory.
+python scripts/download_assets.py --local-dir /path/to/downloads
+
+# Select another release containing the same checksum-matched assets.
+python scripts/download_assets.py --release-tag TAG
+```
+
+The local directory must contain the requested files:
+`reaction_datasets.tar.gz`, `synthetic_pretrain.ckpt`, and
+`reported_finetune.ckpt`. The script verifies SHA-256 hashes for either source.
+The preparation script reproduces
 all five saved training/validation/replay files byte for byte. It refuses to
 overwrite existing outputs. To use another dataset, provide `--synthetic` and
 `--uspto` paths and omit `--verify-reported`. Inputs must contain one

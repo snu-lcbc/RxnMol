@@ -52,7 +52,7 @@
     "unchanged_from_retained_training_source": false
   },
   "scripts/download_assets.py": {
-    "sha256": "78d75c24e34ecb93dfd7ffdfb9f9f5cc8d39fd49c91f13078038bdd72d2b5242",
+    "sha256": "2aee2c2a166666965d2e395c1f45f4459d01ba1e76fac49f4f1655225812cb4c",
     "unchanged_from_retained_training_source": false
   },
   "scripts/check_tokenizer.py": {

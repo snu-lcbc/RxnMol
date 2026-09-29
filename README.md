@@ -1,6 +1,4 @@
-# RxnMol: Fragment-Based Synthesis Path Optimization
-
-**Synthesis-Aware Molecular Optimization: A Data-Driven Approach to de novo Molecular Generation**
+# RxnMol: Synthesis-Aware Molecular Generation via Reaction-Driven Global Search
 
 RxnMol is a novel molecular optimization framework that operates on **synthesis routes** rather than molecular structures directly. By representing candidates as ordered sequences of commercially available building blocks (fragments), RxnMol ensures that every generated molecule comes with a valid, step-by-step synthesis pathway predicted by a neural reaction model.
 
@@ -131,9 +129,6 @@ runtime:
 
 ### Settings used in the experiments
 
-The example above uses bank size 100. The main comparison uses bank size 1,000
-and routes containing two to five building blocks (one to four reaction steps).
-
 | Configuration key | Bank 100 | Bank 500 | Bank 1,000 |
 |---|---:|---:|---:|
 | `csa.seed_size` | 60 | 300 | 600 |
@@ -167,9 +162,7 @@ identified with those runs.
 
 ### Preparing building blocks
 
-The reported searches used `data/enamine_fragments.smi` without additional
-molecular-weight, formal-charge, or reactive-substructure filters. Charges and
-disconnected components, including counterions, were retained.
+Building block library can be found in `data/enamine_fragments.smi`.
 
 [`scripts/prepare_building_blocks.py`](scripts/prepare_building_blocks.py)
 accepts SDF and SMILES, performs RDKit parsing and sanitization, removes explicit
@@ -180,12 +173,6 @@ python scripts/prepare_building_blocks.py --input data/enamine_fragments.smi \
   --output prepared/enamine_fragments.smi --report prepared/report.json \
   --records prepared/records.csv
 ```
-
-In the clean CPU test environment, reprocessing the released SMILES file retained
-all 259,380 entries and reproduced its bytes. This does not establish the original
-SDF conversion or ordering procedure. Optional salt removal, neutralization,
-deduplication, and property or SMARTS filters are available for alternative
-libraries; they were not used for the reported search library.
 
 ### Code Example
 
@@ -221,8 +208,13 @@ print(f"Synthesis Route: {best_candidate.genotype}")
 |----------|-----------|
 | Standard | `qed`, `sa_score`, `logp`, `lipinski` |
 | GuacaMol | `zaleplon`, `osimertinib`, `fexofenadine`, `ranolazine`, ... |
-| TDC | `jnk3`, `gsk3b`, `drd2`, `seh`, ... |
+| TDC bioactivity | `jnk3`, `gsk3b`, `drd2`, ... |
+| MPNN docking proxies | `seh`, `cb1_raw`, `cb1_zscore`, `cb1_minmax` |
+| GNN docking proxies (CSearch) | `mpro`, `btk`, `alk`, `h1n1_na` |
 | Custom | Define your own via `ObjectiveFunction` base class |
+
+The docking-proxy objectives also have `_lipinski` and `_mw` variants, such as
+`seh_lipinski` and `alk_mw`, which apply the corresponding property penalties.
 
 Check all available objective functions:
 ```bash
@@ -239,9 +231,15 @@ code, software versions, and checkpoint identities.
 
 The two raw reaction corpora and required checkpoints are identified by filename
 and checksum in the [asset manifest](reaction_model/reference/assets.json).
-Obtain the asset files from the [GitHub release](https://github.com/snu-lcbc/RxnMol/releases)
-corresponding to your code version. The package accepts files from a local
-directory or downloads them using an explicitly selected release tag; see the
+From the repository root, download and verify both datasets and checkpoints with:
+
+```bash
+python reaction_model/scripts/download_assets.py
+```
+
+The default is [release v1.1.0](https://github.com/snu-lcbc/RxnMol/releases/tag/v1.1.0).
+Use `--local-dir PATH` for files already downloaded, or `--release-tag TAG` to
+select another release with matching asset checksums. See the
 [asset preparation instructions](reaction_model/README.md#files-and-data).
 
 ### Model Weights
