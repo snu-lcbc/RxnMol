@@ -1,0 +1,42 @@
+{
+  "split_seed": 42,
+  "raw": {
+    "synthetic_rxn": {
+      "sha256": "ae3879a8f56287058645be0d330c64b1951df0b1b50dfb87cdebc4b8ac22fe8c",
+      "bytes": 415139989,
+      "records": 2632867
+    },
+    "uspto-mit": {
+      "sha256": "ac4cca1327a54689c936bd846f5d16e2ece286f9ffec5d289e4ee2a70c86308a",
+      "bytes": 44285196,
+      "records": 479035
+    }
+  },
+  "derived": {
+    "synthetic_rxn/train_rxn.txt": {
+      "sha256": "9bb0817c0a1da83eb4a6896ac3e7769aeb9ec1e00c2d35f37fd889d83e473546",
+      "bytes": 413084398,
+      "records": 2619767
+    },
+    "synthetic_rxn/val_rxn.txt": {
+      "sha256": "6033ded55a43cf8551bb6bb23337b429edbf003629dfb374318880b189a5a671",
+      "bytes": 2055591,
+      "records": 13100
+    },
+    "uspto-mit/train_rxn.txt": {
+      "sha256": "063c44af7f9e4a249decf1063cb7e27eb4ddc4dffb89251b64ec30c2141503a7",
+      "bytes": 43842286,
+      "records": 474268
+    },
+    "uspto-mit/val_rxn.txt": {
+      "sha256": "1102607f77361a802e95fd1e4523773bfecb64435f138dee1de4d3f2024ad6ab",
+      "bytes": 442910,
+      "records": 4767
+    },
+    "mixed/uspto_mit_with_synth10_train.txt": {
+      "sha256": "81301c2997ecb6ba0848c2116e815b446abef032d018812924a9a9e328da7df5",
+      "bytes": 52166347,
+      "records": 526964
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "train.py": {
+    "sha256": "682068328ebadac41751ba77d5c7f8a698cdbf41260c7271030ddca2fd57d3a8",
+    "unchanged_from_retained_training_source": true
+  },
+  "evaluate.py": {
+    "sha256": "9be476902ac2fad5f555627dc57e2d33eb84be14db713d8270f75839a7e415b7",
+    "unchanged_from_retained_training_source": true
+  },
+  "predict.py": {
+    "sha256": "6b5ed7327a2716ecf1542f574070e1c5f27d7b86270b9c007f33494fd99487c2",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/__init__.py": {
+    "sha256": "785b23010923264bdb2dd43f6454a38da8899c5c48107405c58f56769cfd3c20",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/config.py": {
+    "sha256": "5e493e3383e04a0347b780ac7451c145a1585fe7a9c506a01bac51aa40682f04",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/tokenizer.py": {
+    "sha256": "b860c87f9d277702e3c24b0e84a7f8c5e2e0cbfede8150ea7cc209848dc2bdd9",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/dataset.py": {
+    "sha256": "0a0b391445c24f94c7165c7af17586fd8f02942adfd4a1e6f0761e63694648dc",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/lightning_module.py": {
+    "sha256": "75a5b50e8bc1d8101585388a197b8f85ef90695c0fc4b4d14baf8967d373120b",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/predictor.py": {
+    "sha256": "63587ff17d0d83d06e80f0fe0ac6083ad1b4903141a373f36711f34943aa050b",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/decoder_model.py": {
+    "sha256": "44c0e7329dcf38a2c42a613970ed908dc65e1db2b11abd173656a66f68bd939e",
+    "unchanged_from_retained_training_source": true
+  },
+  "src/transformer.py": {
+    "sha256": "b7aacb912002acfbd5ffe3ee7d7c3c8ad2aef733c0e4356bd59753978c42e046",
+    "unchanged_from_retained_training_source": true
+  },
+  "scripts/prepare_data.py": {
+    "sha256": "ffeeaf5c9d5c888447498cbd17f0eda2d7509245b9779a4819420dca6aa2ff89",
+    "unchanged_from_retained_training_source": false
+  },
+  "scripts/smoke_test.py": {
+    "sha256": "0fe9c134829766e44003f69530612669ac16e7e84184d70c9b34dd8ec10b960d",
+    "unchanged_from_retained_training_source": false
+  },
+  "scripts/download_assets.py": {
+    "sha256": "78d75c24e34ecb93dfd7ffdfb9f9f5cc8d39fd49c91f13078038bdd72d2b5242",
+    "unchanged_from_retained_training_source": false
+  },
+  "scripts/check_tokenizer.py": {
+    "sha256": "9b6b37d64d5de12ced1dd46b8834b801e4661cda04af489acfefd1200ee0cc9b",
+    "unchanged_from_retained_training_source": false
+  }
+}

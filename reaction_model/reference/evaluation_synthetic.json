@@ -1,0 +1,22 @@
+{
+  "checkpoint": "runs/synthetic_rxn/ft_synth_to_uspto_mix90_10/checkpoints/epoch=14-step=29812-val_loss=0.8856.ckpt",
+  "data": "data/synthetic_rxn/val_rxn.txt",
+  "beam_size": 1,
+  "task": "forward",
+  "metrics": {
+    "total_samples": 13100,
+    "top1_accuracy": 0.7389312977099237,
+    "top3_accuracy": null,
+    "top5_accuracy": null,
+    "top10_accuracy": null,
+    "exact_match_accuracy": 0.7322900763358778,
+    "canonicalized_match_accuracy": 0.7389312977099237,
+    "bleu": 0.9539503126445765,
+    "validity": 0.9987022900763359,
+    "token_accuracy": 0.0,
+    "invalid_smiles_rate": 0.0012977099236641222,
+    "avg_sequence_length": 75.73488549618321,
+    "tanimoto_mean": 0.9145923488091762,
+    "tanimoto_valid_rate": 0.9987022900763359
+  }
+}

@@ -103,3 +103,10 @@ rxn_smiles_mit/
 *.sh
 !run.py
 output*
+
+# Public preparation and training scripts (large assets remain excluded).
+!scripts/
+scripts/*
+!scripts/prepare_building_blocks.py
+!reaction_model/scripts/
+!reaction_model/scripts/*.py

@@ -4,6 +4,8 @@
 
 RxnMol is a novel molecular optimization framework that operates on **synthesis routes** rather than molecular structures directly. By representing candidates as ordered sequences of commercially available building blocks (fragments), RxnMol ensures that every generated molecule comes with a valid, step-by-step synthesis pathway predicted by a neural reaction model.
 
+![RxnMol workflow: optimization of fragment routes using a forward reaction predictor](assets/overview.png)
+
 ## Research Overview
 
 ### The Core Idea
@@ -20,7 +22,27 @@ Traditional de novo design methods often generate "unmakeable" molecules. RxnMol
 - **High Performance**: GPU-accelerated batch reaction prediction and caching.
 
 ## Installation
-### - Prerequisite: Install PyTorch & TensorRT
+
+### Software versions
+
+The retained molecular-generation environment reports the following versions.
+These document the experimental environment; they are not a tested installation
+lock for every GPU and objective model.
+
+| Software | Version |
+|---|---|
+| Python | 3.11.6 |
+| RDKit | 2023.09.6 |
+| guacamol | 0.5.5 |
+| PyTDC | 1.1.15 |
+| PyTorch | 2.4.0+cu121 |
+| PyTorch CUDA build | 12.1 |
+| NumPy | 1.26.4 |
+| SciPy | 1.16.3 |
+| scikit-learn | 1.2.2 |
+| pandas | 2.3.3 |
+
+### Prerequisite: Install PyTorch & TensorRT
 The reaction predictor relies on **Torch-TensorRT** for fast inference code. You must install the version of PyTorch and TensorRT compatible with your specific CUDA version (e.g., CUDA 12.x).
 
 Recommend to setup a new environment before installing.
@@ -42,7 +64,7 @@ pip install -e .
 ### Manual Installations:
 If you need to install a specific PyTorch and CUDA version (`torch=2.4.0` `cuda=12.1`): 
 ```bash
-pip install torch==2.4.0 torch-tensorrt --extra-index-url https://download.pytorch.org/whl/cu121
+pip install torch==2.4.0 torch-tensorrt==2.4.0 --extra-index-url https://download.pytorch.org/whl/cu121
 ```
 > **Note**: Install `torch` and torch-related packages with compatible versions matching your CUDA version. See [pytorch.org](https://pytorch.org/get-started/locally/) for details.
 
@@ -107,6 +129,64 @@ runtime:
   device: cuda    # Use GPU for reaction prediction
 ```
 
+### Settings used in the experiments
+
+The example above uses bank size 100. The main comparison uses bank size 1,000
+and routes containing two to five building blocks (one to four reaction steps).
+
+| Configuration key | Bank 100 | Bank 500 | Bank 1,000 |
+|---|---:|---:|---:|
+| `csa.seed_size` | 60 | 300 | 600 |
+| `csa.max_iter` | 100 | 500 | 500 |
+| `csa.early_stop_patience` | 50 | 50 | 50 |
+| `csa.d_init` | 0.6 | 0.6 | 0.6 |
+| `csa.gamma` | 0.99 | 0.99 | 0.99 |
+| `csa.d_min` | 0.1 | 0.1 | 0.1 |
+| Maximum attempted offspring per generation | 1,500 | 7,500 | 15,000 |
+
+Each seed uses five crossover attempts against the current bank
+(`csa.n_cross_op1`), five against the initial bank (`csa.n_cross_op2`), and five
+mutation attempts (`csa.n_mut_op`). A crossover can return two children and a
+mutation one. These are attempt limits, not counts of objective evaluations or
+unique products.
+
+For fragment-route search, the engine selects uniformly between the two crossover
+operators and among the three mutation operators. The generic `operators`
+probability fields, weights, and name lists do not control these choices.
+Mutation positions use weight 0.2 for the first building block and 1.0 for other
+positions; this is separate from selection of the mutation type.
+
+The initial bank receives one local-refinement pass, with
+`csa.local_optimization_max_steps=3` and `csa.local_optimization_neighbors=5`.
+`csa.local_optimization_enabled=false` disables refinement during the search loop,
+but not that initial pass. Search stops at the generation limit, after 50
+generations without improvement in the best objective, or when no unused seeds
+remain. Normal termination writes the final bank. Original runs used
+`runtime.random_seed=null`; fixed seeds in later repairs or ablations must be
+identified with those runs.
+
+### Preparing building blocks
+
+The reported searches used `data/enamine_fragments.smi` without additional
+molecular-weight, formal-charge, or reactive-substructure filters. Charges and
+disconnected components, including counterions, were retained.
+
+[`scripts/prepare_building_blocks.py`](scripts/prepare_building_blocks.py)
+accepts SDF and SMILES, performs RDKit parsing and sanitization, removes explicit
+hydrogens, and writes canonical isomeric SMILES with per-record outcomes:
+
+```bash
+python scripts/prepare_building_blocks.py --input data/enamine_fragments.smi \
+  --output prepared/enamine_fragments.smi --report prepared/report.json \
+  --records prepared/records.csv
+```
+
+In the clean CPU test environment, reprocessing the released SMILES file retained
+all 259,380 entries and reproduced its bytes. This does not establish the original
+SDF conversion or ordering procedure. Optional salt removal, neutralization,
+deduplication, and property or SMARTS filters are available for alternative
+libraries; they were not used for the reported search library.
+
 ### Code Example
 
 ```python
@@ -149,11 +229,29 @@ Check all available objective functions:
 python src/rxnmol/objectives/registry.py
 ```
 
-## Model Weights
+## Reaction Prediction Model
+
+The [`reaction_model/`](reaction_model/README.md) directory contains the model
+used in the manuscript: Synthetic-RXN pretraining followed by USPTO-MIT
+fine-tuning with synthetic replay (`ft_synth_to_uspto_mix90_10`). It provides
+training recipes, the saved tokenizer, exact dataset preparation, evaluation
+code, software versions, and checkpoint identities.
+
+The two raw reaction corpora and required checkpoints are identified by filename
+and checksum in the [asset manifest](reaction_model/reference/assets.json).
+Obtain the asset files from the [GitHub release](https://github.com/snu-lcbc/RxnMol/releases)
+corresponding to your code version. The package accepts files from a local
+directory or downloads them using an explicitly selected release tag; see the
+[asset preparation instructions](reaction_model/README.md#files-and-data).
+
+### Model Weights
 
 The reaction prediction model weights are required for fragment-based optimization. Download from:
 
-- [Model weights (link)] - *Coming soon*
+- [Deployment, proxy, and docking weights](https://doi.org/10.5281/zenodo.20444600)
+
+The evaluated checkpoint and the final deployment weights are identified separately
+in [reaction_model/README.md](reaction_model/README.md).
 
 
 ## License

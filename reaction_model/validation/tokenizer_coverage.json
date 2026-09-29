@@ -1,0 +1,16 @@
+{
+  "vocabulary_size": 233,
+  "datasets": {
+    "synthetic": {
+      "records": 2632867,
+      "records_with_unknown_tokens": 0,
+      "unknown_tokens": {}
+    },
+    "uspto": {
+      "records": 479035,
+      "records_with_unknown_tokens": 0,
+      "unknown_tokens": {}
+    }
+  },
+  "provenance": "Author recalls using Synthetic-RXN and USPTO to build the vocabulary; the exact original input list and build log were not recovered. Coverage is measured independently."
+}

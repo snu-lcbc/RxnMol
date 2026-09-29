@@ -1,0 +1,124 @@
+runtime:
+  resume_from: null
+  init_from: null
+  init_strict: true
+  check_model_config: true
+  load_model_config: false
+  copy_init_to_output: false
+  freeze_n_layers: 0
+  freeze_embeddings: false
+model:
+  type: transformer
+  d_model: 512
+  n_heads: 8
+  n_kv_heads: 2
+  n_layers: 8
+  d_ff: 1408
+  max_seq_len: 200
+  dropout: 0.1
+  vocab_size: 233
+  pad_id: 0
+  bos_id: 1
+  eos_id: 2
+  unk_id: 3
+  sep_id: 4
+  rope_base: 10000.0
+training:
+  batch_size: 128
+  gradient_accumulation_steps: 1
+  lr: 0.0002
+  l2sp_lambda: 0.0
+  weight_decay: 0.01
+  betas:
+  - 0.9
+  - 0.98
+  eps: 1.0e-08
+  warmup_steps: 2000
+  max_steps: 120000
+  scheduler: cosine_restarts
+  num_cycles: 2
+  scheduler_patience: 10
+  scheduler_factor: 0.5
+  grad_clip: 1.0
+  label_smoothing: 0.1
+  precision: bf16-mixed
+  val_check_interval: 2000
+  num_val_samples: 1000
+  early_stopping_enabled: true
+  early_stopping_patience: 50
+  early_stopping_monitor: val/loss
+  early_stopping_mode: min
+data:
+  train_path: data/synthetic_rxn/train_rxn.txt
+  val_path: data/synthetic_rxn/val_rxn.txt
+  test_path: ''
+  tokenizer_path: null
+  max_src_len: 200
+  max_tgt_len: 200
+  use_hf_cache: true
+  cache_dir: .cache/datasets
+  tokenize_num_proc: 8
+  auto_split: false
+  split_ratio: 0.1
+  split_seed: 42
+  split_dir: null
+tokenizer:
+  path: tokenizer/tokenizer.json
+  task: forward
+  instruction: Predict the products of this reaction
+  auto_train: false
+  use_fast: true
+  train_min_frequency: 1
+  train_num_proc: 4
+  use_task_tokens: true
+  use_role_tokens: true
+  special_tokens:
+    pad: <pad>
+    bos: <s>
+    eos: </s>
+    unk: <unk>
+    sep: <sep>
+inference:
+  strategy: beam
+  batch_size: 128
+  max_len: 256
+  temperature: 1.0
+  top_k: null
+  top_p: null
+  beam_size: 5
+  length_penalty: 1.0
+  early_stopping: true
+  no_repeat_ngram_size: 0
+  speculative:
+    enabled: false
+    draft_layers: 2
+    gamma: 5
+  compile: false
+  compile_mode: reduce-overhead
+  compile_backend: inductor
+distributed:
+  strategy: ddp
+  devices: 4
+  num_nodes: 1
+  fsdp:
+    sharding: FULL_SHARD
+    cpu_offload: false
+    activation_checkpointing: true
+    backward_prefetch: BACKWARD_PRE
+logging:
+  output_dir: runs
+  experiment_name: synthetic_rxn_base
+  run_dir: null
+  create_run_dir: false
+  run_name: null
+  timestamp_format: '%Y%m%d_%H%M%S'
+  wandb: false
+  wandb_project: reaction-prediction
+  log_every_n_steps: 30
+  val_check_interval: null
+  save_top_k: 20
+hardware:
+  accelerator: auto
+  num_workers: 8
+  pin_memory: true
+  seed: 42

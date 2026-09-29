@@ -9,7 +9,7 @@ scipy>=1.10.0
 scikit-learn==1.2.2
 
 # Chemistry
-rdkit>=2023.03.1
+rdkit==2023.9.6
 
 # Deep Learning
 # If you use a different CUDA/CPU setup, adjust the index URL and versions.
@@ -37,5 +37,5 @@ pyyaml>=6.0
 tqdm>=4.65.0
 
 # Benchmarks & Oracles
-guacamol>=0.5.4
-PyTDC==1.1.14
+guacamol==0.5.5
+PyTDC==1.1.15

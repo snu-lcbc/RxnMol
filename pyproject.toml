@@ -30,8 +30,8 @@ dependencies = [
     "scikit-learn==1.2.2",
 
     # Chemistry & Benchmarks
-    "rdkit>=2023.03.1",
-    "guacamol>=0.5.4",
+    "rdkit==2023.9.6",
+    "guacamol==0.5.5",
     "PyTDC==1.1.15",
 
     # Utilities

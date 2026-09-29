@@ -1,0 +1,17 @@
+{
+  "additional_special_tokens": [
+    "<forward-reaction>",
+    "<retrosynthesis>",
+    "<elementary-step>",
+    "<mechanism>",
+    "<reactants>",
+    "<reagents>",
+    "<conditions>",
+    "<products>"
+  ],
+  "bos_token": "<s>",
+  "eos_token": "</s>",
+  "pad_token": "<pad>",
+  "sep_token": "<sep>",
+  "unk_token": "<unk>"
+}

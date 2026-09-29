@@ -27,6 +27,31 @@ RDLogger.DisableLog("rdApp.*")
 logger = logging.getLogger(__name__)
 
 
+# Substrings marking a CUDA/device fault that corrupts the context for the rest of
+# the process. Retrying after one of these always fails, so they must abort the run
+# rather than be absorbed into per-candidate "FAILED" results. Plain OOM is excluded
+# on purpose: RxnPredictor.predict_batch recovers from it by shrinking the batch.
+_FATAL_DEVICE_ERROR_MARKERS = (
+    "cuda error",
+    "cuda driver error",
+    "device-side assert",
+    "illegal memory access",
+    "initialization error",
+    "no kernel image",
+    "cublas",
+    "cudnn",
+    "nccl",
+)
+
+
+def _is_fatal_device_error(exc: BaseException) -> bool:
+    """True if `exc` signals an unrecoverable GPU/device fault."""
+    message = str(exc).lower()
+    if "out of memory" in message:
+        return False
+    return any(marker in message for marker in _FATAL_DEVICE_ERROR_MARKERS)
+
+
 class FragmentRouteSpec(SolutionSpec):
     """
     Solution specification for fragment-based synthesis routes.
@@ -354,7 +379,19 @@ class FragmentRouteSpec(SolutionSpec):
         # 3. Predict missing via RxnPredictor (which already retries on OOM)
         if missing_inputs:
             predicted_products = self._predict_missing_with_fallback(missing_inputs)
-            self.reaction_cache.set_batch(missing_inputs, predicted_products)
+
+            # Never persist the "FAILED" sentinel: a cached failure is served to
+            # every later run as if it were a real prediction, so one bad job
+            # poisons the shared cache permanently.
+            cacheable = [
+                (key, pred)
+                for key, pred in zip(missing_inputs, predicted_products)
+                if pred != "FAILED"
+            ]
+            if cacheable:
+                self.reaction_cache.set_batch(
+                    [k for k, _ in cacheable], [p for _, p in cacheable]
+                )
 
             for idx, pred in zip(missing_indices, predicted_products):
                 products[idx] = pred
@@ -363,22 +400,58 @@ class FragmentRouteSpec(SolutionSpec):
 
     def _predict_missing_with_fallback(self, inputs: List[str]) -> List[str]:
         """
-        Predict missing reactions via RxnPredictor and fall back to sequential
-        per-input prediction if the batch call fails for any reason.
+        Predict missing reactions, retrying input-level failures individually.
+
+        Propagate device failures and an entirely failed fallback so an unusable
+        reaction model cannot silently produce a normal final bank.
         """
         try:
             return self.rxn_predictor.predict_batch(inputs)
         except Exception as e:
+            if _is_fatal_device_error(e):
+                logger.critical(
+                    "Unrecoverable device fault during batch prediction of %d reactions: %s. "
+                    "Aborting the run instead of degrading silently.",
+                    len(inputs),
+                    e,
+                )
+                raise RuntimeError(
+                    f"Unrecoverable device fault in reaction model: {e}"
+                ) from e
+
             logger.error(
                 f"Batch prediction failed for {len(inputs)} reactions ({e}); falling back to sequential"
             )
             results = []
+            n_failed = 0
             for inp in inputs:
                 try:
                     results.append(self.rxn_predictor.predict(inp))
                 except Exception as single_err:
+                    if _is_fatal_device_error(single_err):
+                        logger.critical(
+                            "Unrecoverable device fault during sequential fallback: %s. "
+                            "Aborting the run.",
+                            single_err,
+                        )
+                        raise RuntimeError(
+                            f"Unrecoverable device fault in reaction model: {single_err}"
+                        ) from single_err
                     logger.debug("Sequential prediction failed for %s: %s", inp, single_err)
                     results.append("FAILED")
+                    n_failed += 1
+
+            if n_failed == len(inputs):
+                raise RuntimeError(
+                    f"All {len(inputs)} reaction predictions failed in the sequential "
+                    "fallback; the reaction model is not usable. Aborting the run."
+                )
+            if n_failed:
+                logger.warning(
+                    "%d/%d reaction predictions failed in sequential fallback",
+                    n_failed,
+                    len(inputs),
+                )
             return results
 
     def compute_fingerprint(self, candidate: Candidate) -> Optional[Any]:

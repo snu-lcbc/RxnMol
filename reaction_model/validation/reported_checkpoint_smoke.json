@@ -1,0 +1,24 @@
+{
+  "checkpoint": "weights/reported_finetune.ckpt",
+  "data": "data/uspto-mit/val_rxn.txt",
+  "beam_size": 1,
+  "length_penalty": 1.0,
+  "task": "forward",
+  "metrics": {
+    "total_samples": 2,
+    "top1_accuracy": 1.0,
+    "top3_accuracy": null,
+    "top5_accuracy": null,
+    "top10_accuracy": null,
+    "exact_match_accuracy": 1.0,
+    "canonicalized_match_accuracy": 1.0,
+    "bleu": 1.0,
+    "validity": 1.0,
+    "token_accuracy": 0.0,
+    "invalid_smiles_rate": 0.0,
+    "avg_sequence_length": 60.5,
+    "tanimoto_mean": 1.0,
+    "tanimoto_valid_rate": 1.0
+  },
+  "path_notation": "Paths use the portable package layout; metrics are unchanged from the recorded two-sample check."
+}

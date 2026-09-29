@@ -1,0 +1,12 @@
+data/raw/
+data/synthetic_rxn/
+data/uspto-mit/
+data/mixed/
+data/reaction_datasets.tar.gz
+*.part
+weights/
+runs/
+.cache/
+__pycache__/
+*.pyc
+.venv*/
